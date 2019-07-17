@@ -26,9 +26,10 @@
 #define PRINT_FAIL 0
 
 char* sigs[] = {
-    "24576:hoNolOhBCfXLEX2kr/KXE9UI7EkJqTC7q2i1:DlOhBCfLUjME9UI7JJqW7Y", // AutoHotkey.exe            64 bit
-    "24576:UGf8s3gt9LWhHPY/3rvTg9bXdC8fZULm6F:p8s3gt9LoHwjvTyXdC8fZO",   // Compiled .ahk -> .exe     64 bit
-
+    "24576:hoNolOhBCfXLEX2kr/KXE9UI7EkJqTC7q2i1:DlOhBCfLUjME9UI7JJqW7Y",                                        // Compiled .ahk -> .exe 64 bit
+    "24576:UGf8s3gt9LWhHPY/3rvTg9bXdC8fZULm6F:p8s3gt9LoHwjvTyXdC8fZO",                                          // AutoHotkey.exe 64 bit
+    "12288:1m5qA533YfhZ+z5+Qx5CqocApRBxl0vurKUMMvkX/wECYBvuq17VGwBcW9cAgbGn:1m5kL+z5+Qx5CBl0vuzKb9cAq35SGBjC",  // AutoHotkeyA32.exe
+    "12288:SLWctC9JiZiCMW4xW23TGfOLqO7AUWTDdKd4LbpANE:SLztC9M74WbOLq+WTDdKd4pAq",                               // AutoHotkeyU32.exe
     };
 
 void print(char* a){
@@ -63,13 +64,12 @@ void findHashMatch( DWORD processID) {
                 fuzzy_hash_filename(filename, result);
                 
                 // Compare fuzzy hash to script signatures  -  if greater than 0 then match/script detected
-                if (fuzzy_compare(sigs[0], result) > 0) {
-                    print(filename);
-                    getch();
-                }
-                else if (fuzzy_compare(sigs[1], result) > 0) {
-                    print(filename);
-                    getch();
+                int count;
+                for (count = 0; count < 5; count++) {
+                    if (fuzzy_compare(sigs[count], result) > 0) {
+                        print(filename);
+                        getch();
+                    }
                 }
 
                 free(result);
